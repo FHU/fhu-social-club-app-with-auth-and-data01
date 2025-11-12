@@ -1,14 +1,16 @@
 import { appwrite } from "@/lib/appwrite";
 import type { RootStackParamList } from "@/types/navigation";
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
 
 export default function LoginScreen() {
-  const navigation = useNavigation<LoginScreenNavigationProp>();
+  // const navigation = useNavigation<LoginScreenNavigationProp>();
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,10 +23,10 @@ export default function LoginScreen() {
         setLoading(true);
 
         try {
-            const user = await appwrite.loginWithEmail(email, password);
+            const user = await appwrite.loginWithEmail({email, password});
             console.log("Logged in user:", user);
-            Alert.alert("Welcome back!", `Logged in as ${user.name}`);
-            navigation.replace("Home");
+            Alert.alert("Welcome back!", `Logged in as ${user?.name}`);
+            // router.replace("/home");
         }
         catch (err: any) {
             console.error(err);
@@ -35,11 +37,13 @@ export default function LoginScreen() {
     }
 
     function handleGuest() {
-        navigation.replace("Home");
+        // navigation.replace("Home");
+        router.replace("/");
     }
 
     function handleSignup() {
-        navigation.navigate("Signup");
+        // navigation.navigate("Signup");
+        router.push("/signup");
     }
 
     return (

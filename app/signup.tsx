@@ -1,45 +1,40 @@
 import { appwrite } from "@/lib/appwrite";
 import type { RootStackParamList } from "@/types/navigation";
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Signup">;
 
-export default function LoginScreen() {
-  const navigation = useNavigation<LoginScreenNavigationProp>();
+export default function SignupScreen() {
+  // const navigation = useNavigation<LoginScreenNavigationProp>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
     async function handleLogin() {
-        if (!email || !password) {
-            Alert.alert("Missing Fields", "Please enter both email and password.");
-            return;
-        }
-        setLoading(true);
+      if (!email || !password) {
+        Alert.alert("Missing Fields", "Please enter both email and password.");
+        return;
+      }
+      setLoading(true);
 
-        try {
-            const user = await appwrite.loginWithEmail(email, password);
-            console.log("Logged in user:", user);
-            Alert.alert("Welcome back!", `Logged in as ${user.name}`);
-            navigation.replace("Home");
-        }
-        catch (err: any) {
-            console.error(err);
-            Alert.alert("Login Failed", err.message || "Something went wrong.");
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    function handleGuest() {
-        navigation.replace("Home");
-    }
-
-    function handleSignup() {
-        navigation.navigate("Signup");
+      try {
+        const user = await appwrite.loginWithEmail({email, password});
+        console.log("Logged in user:", user);
+        Alert.alert("Welcome back!", `Logged in as ${user?.name}`);
+        // router.replace("/index");
+      }
+      catch (err: any) {
+        console.error(err);
+        Alert.alert("Login Failed", err.message || "Something went wrong.");
+      }
+      finally {
+        setLoading(false);
+      }
     }
 
     return (
@@ -67,14 +62,6 @@ export default function LoginScreen() {
 
       <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
         {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Login</Text>}
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.linkButton} onPress={handleSignup}>
-        <Text style={styles.linkText}>Don't have an account? Sign up</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.guestButton} onPress={handleGuest}>
-        <Text style={styles.guestText}>Continue as Guest</Text>
       </TouchableOpacity>
     </View>
   );
@@ -131,4 +118,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
   },
-});
+            })

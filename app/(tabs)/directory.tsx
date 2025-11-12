@@ -1,18 +1,11 @@
-import { Member, RootStackParamList } from "@/types/navigation";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Member } from "@/types/navigation";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-type DirectoryScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Directory"
->;
-
 export default function HomeScreen() {
   const router = useRouter();
-  const navigation = useNavigation<DirectoryScreenNavigationProp>();
+  // const navigation = useNavigation<DirectoryScreenNavigationProp>();
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
