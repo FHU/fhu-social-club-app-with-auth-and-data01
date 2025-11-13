@@ -1,14 +1,9 @@
 import { appwrite } from "@/lib/appwrite";
-import type { RootStackParamList } from "@/types/navigation";
-import type { StackNavigationProp } from "@react-navigation/stack";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
-
 export default function LoginScreen() {
-  // const navigation = useNavigation<LoginScreenNavigationProp>();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

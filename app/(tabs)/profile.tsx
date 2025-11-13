@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Models } from "react-native-appwrite";
 
-// Profile: https://fhu.edu/wp-content/uploads/faculty-placeholder.jpg
-
 export default function ProfileScreen() {
   const router = useRouter();
   const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null);

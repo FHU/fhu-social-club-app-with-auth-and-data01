@@ -1,7 +1,10 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function IndexScreen() {
+  const router = useRouter();
+
   const clubs = [
     { name: "CHI BETA CHI", greek: "ΧΒΧ", color: "#f6f061", bgColor: "#662d91" },
     { name: "OMEGA CHI", greek: "ΩΧ", color: "#ffffff", bgColor: "#009f53" },
@@ -9,6 +12,13 @@ export default function IndexScreen() {
     { name: "SIGMA RHO", greek: "ΣΡ", color: "#242020", bgColor: "#f5ef61" },
     { name: "XI CHI DELTA", greek: "ΞΧΔ", color: "#0756a0", bgColor: "#a7a9ac" },
   ];
+
+  const handleClubPress = (clubName: string) => {
+    router.push({
+      pathname: "/events",
+      params: { club: clubName },
+    });
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -19,6 +29,7 @@ export default function IndexScreen() {
           <TouchableOpacity
             style={[styles.clubBox, { backgroundColor: club.bgColor }]}
             activeOpacity={0.8}
+            onPress={() => handleClubPress(club.name)}
           >
             <Text style={[styles.greekLetters, { color: club.color }]}>
               {club.greek}

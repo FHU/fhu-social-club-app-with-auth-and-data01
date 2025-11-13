@@ -1,23 +1,11 @@
 import { Member } from "@/types/navigation";
-// import { RouteProp, useRoute } from "@react-navigation/native";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
-// import { useRouter } from "expo-router";
 import { Image, Linking, ScrollView, StyleSheet, Text, View } from "react-native";
 
-// type ProfileRouteProp = RouteProp<RootStackParamList, "Profile">;
-
-// Profile: https://fhu.edu/wp-content/uploads/faculty-placeholder.jpg
-
 export default function ProfileScreen() {
-  // const route = useRoute<ProfileRouteProp>();
-  // const { member } = route.params;
-  // const parsedMember: Member = JSON.parse(member);
-  // const router = useRouter();
-
   const { member } = useLocalSearchParams();
   const parsedMember: Member = member ? JSON.parse(member as string) : null;
-  const router = useRouter();
 
   function capitalizeWords(str: string) {
     return str.replace(/\b\w/g, char => char.toUpperCase());

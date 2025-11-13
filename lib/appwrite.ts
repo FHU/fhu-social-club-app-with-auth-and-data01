@@ -77,20 +77,18 @@ export function createAppWriteService(config: AppWriteConfig) {
     email,
     password,
     name,
-    phone,
     club
   }: {
     email: string;
     password: string;
     name: string;
-    phone: string;
     club: string
   }): Promise<Models.User<Models.Preferences> | null> => {
     try {
       await account.create({ userId: ID.unique(), email, password, name });
       await account.createEmailPasswordSession({ email, password });
       const user = await account.get<Models.User<Models.Preferences>>();
-      await createMemberForUser(user, { email, phone, club });
+      await createMemberForUser(user, { email, club });
 
       return user;
     } catch (exception) {
@@ -165,7 +163,6 @@ export function createAppWriteService(config: AppWriteConfig) {
         lastName: extra?.lastName ?? lastName,
         userID: user.$id,
         club: extra?.club ?? undefined,
-        phone: extra?.phone ?? undefined,
         email,
       },
       // You can add explicit permissions here if you prefer:
@@ -176,6 +173,8 @@ export function createAppWriteService(config: AppWriteConfig) {
       // ],
     });
   };
+
+
 
   const ensureMemberForUser = async (
     user: Models.User<Models.Preferences>,

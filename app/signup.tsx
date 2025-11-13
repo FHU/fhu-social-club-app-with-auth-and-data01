@@ -1,6 +1,5 @@
 import { appwrite } from "@/lib/appwrite";
 import type { RootStackParamList } from "@/types/navigation";
-// import { useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -9,14 +8,12 @@ import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Signup">;
 
 export default function SignupScreen() {
-  // const navigation = useNavigation<LoginScreenNavigationProp>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
     function handleGuest() {
-      // navigation.replace("Home");
       router.replace("/");
     }
 
@@ -28,16 +25,13 @@ export default function SignupScreen() {
       setLoading(true);
 
       try {
-        const user = await appwrite.loginWithEmail({email, password});
-        console.log("Logged in user:", user);
-        Alert.alert("Welcome back!", `Logged in as ${user?.name}`);
-        // router.replace("/index");
-      }
-      catch (err: any) {
-        console.error(err);
-        Alert.alert("Login Failed", err.message || "Something went wrong.");
-      }
-      finally {
+        const newUser = await appwrite.createAccount(email, password);
+        console.log("New user created:", newUser);
+        const session = await appwrite.loginWithEmail(email, password);
+        console.log("User session:", session);
+        Alert.alert("Your account has been created successfully!");
+        router.replace("/");
+      } finally {
         setLoading(false);
       }
     }
@@ -127,4 +121,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
   },
-            })
+});

@@ -5,7 +5,6 @@ import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, Toucha
 
 export default function HomeScreen() {
   const router = useRouter();
-  // const navigation = useNavigation<DirectoryScreenNavigationProp>();
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
