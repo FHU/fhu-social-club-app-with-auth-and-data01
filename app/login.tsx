@@ -1,6 +1,5 @@
 import { appwrite } from "@/lib/appwrite";
 import type { RootStackParamList } from "@/types/navigation";
-// import { useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -26,7 +25,6 @@ export default function LoginScreen() {
             const user = await appwrite.loginWithEmail({email, password});
             console.log("Logged in user:", user);
             Alert.alert("Welcome back!", `Logged in as ${user?.name}`);
-            // router.replace("/home");
         }
         catch (err: any) {
             console.error(err);
@@ -37,12 +35,10 @@ export default function LoginScreen() {
     }
 
     function handleGuest() {
-        // navigation.replace("Home");
         router.replace("/");
     }
 
     function handleSignup() {
-        // navigation.navigate("Signup");
         router.push("/signup");
     }
 

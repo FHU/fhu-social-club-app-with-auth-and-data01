@@ -15,6 +15,11 @@ export default function SignupScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+    function handleGuest() {
+      // navigation.replace("Home");
+      router.replace("/");
+    }
+
     async function handleLogin() {
       if (!email || !password) {
         Alert.alert("Missing Fields", "Please enter both email and password.");
@@ -39,7 +44,7 @@ export default function SignupScreen() {
 
     return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back</Text>
+      <Text style={styles.title}>Get Started!</Text>
 
       <TextInput
         style={styles.input}
@@ -61,7 +66,11 @@ export default function SignupScreen() {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
-        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Login</Text>}
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Sign up</Text>}
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.guestButton} onPress={handleGuest}>
+        <Text style={styles.guestText}>Continue as Guest</Text>
       </TouchableOpacity>
     </View>
   );

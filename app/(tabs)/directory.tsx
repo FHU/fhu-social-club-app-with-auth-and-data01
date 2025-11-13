@@ -59,7 +59,7 @@ export default function HomeScreen() {
         renderItem={({ item }: { item: Member }) => (
           <TouchableOpacity
             style={styles.card}
-            onPress={() => router.push({ pathname: "/profile", params: { member: JSON.stringify(item) } })}
+            onPress={() => router.push({ pathname: "/contact", params: { member: JSON.stringify(item) } })}
           >
             <Image source={{ uri: item.imageURL }} style={styles.avatar} />
             <View style={styles.info}>
