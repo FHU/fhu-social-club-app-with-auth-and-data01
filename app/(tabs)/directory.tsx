@@ -1,3 +1,4 @@
+import { useAuth } from "@/hooks/AuthContext";
 import { Member } from "@/types/navigation";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from 'react';
@@ -5,6 +6,7 @@ import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, Toucha
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,6 +15,12 @@ export default function HomeScreen() {
   function capitalizeWords(str: string) {
     return str.replace(/\b\w/g, char => char.toUpperCase());
   }
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.replace("/login");
+    }
+  }, [user, authLoading, router]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,10 +36,10 @@ export default function HomeScreen() {
       }
     };
 
-    fetchData();
-  }, []);
+    if (user) fetchData();
+  }, [user]);
 
-  if (loading) return <ActivityIndicator size="large" style={{ flex: 1, justifyContent: "center" }} />;
+  if (loading || authLoading) return <ActivityIndicator size="large" style={{ flex: 1, justifyContent: "center" }} />;
 
   const handleSearch = (text: string) => {
     setSearchQuery(text);

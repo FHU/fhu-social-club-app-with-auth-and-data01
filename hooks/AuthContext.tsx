@@ -1,4 +1,4 @@
-// import { appwrite } from "@/lib/appwrite";
+// THIS IS THE KEY TO ENABLING AUTHENTICATION
 import {
   APPWRITE_CONFIG,
   createAppWriteService,
@@ -76,40 +76,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   const register = useCallback(
-    async (
-      email: string,
-      password: string,
-      name: string,
-      phone: string,
-      club: string
-    ) => {
-      setLoading(true);
-      setError("");
-      try {
-        const loggedInUser = await appwriteService.registerWithEmail({
-          email,
-          password,
-          name,
-          phone,
-          club,
-        });
-        if (!loggedInUser) {
-          setError("Registration failed. Please try again.");
-        } else {
-          setUser(loggedInUser);
-          const member = await appwriteService.getMemberByUserId(
-            loggedInUser.$id
-          );
-          setMember(member ?? null);
-        }
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Registration failed");
-      } finally {
-        setLoading(false);
+  async (email: string, password: string, name: string, club: string) => {
+    setLoading(true);
+    setError("");
+    try {
+      const loggedInUser = await appwriteService.registerWithEmail({
+        email,
+        password,
+        name,
+        club,
+      });
+
+      if (!loggedInUser) {
+        setError("Registration failed. Please try again.");
+      } else {
+        setUser(loggedInUser);
+        const member = await appwriteService.getMemberByUserId(
+          loggedInUser.$id
+        );
+        setMember(member ?? null);
       }
-    },
-    [appwriteService]
-  );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Registration failed");
+    } finally {
+      setLoading(false);
+    }
+  },
+  [appwriteService]
+);
 
   const logout = useCallback(async () => {
     setLoading(true);
