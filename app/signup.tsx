@@ -11,7 +11,7 @@ type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Signup
 export default function SignupScreen() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [club, setClub] = useState("CHI BETA CHI");
+  const [club, setClub] = useState("xbx");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -72,6 +72,7 @@ export default function SignupScreen() {
           selectedValue={club}
           onValueChange={(itemValue) => setClub(itemValue)}
           style={styles.picker}
+          dropdownIconColor="#000"
         >
           <Picker.Item label="CHI BETA CHI" value="CHI BETA CHI" />
           <Picker.Item label="OMEGA CHI" value="OMEGA CHI" />
@@ -165,12 +166,13 @@ const styles = StyleSheet.create({
   pickerContainer: {
     width: "100%",
     height: 50,
-    backgroundColor: "#fff",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#ddd",
     marginBottom: 16,
     justifyContent: "center",
+    overflow: "hidden",
+    backgroundColor: "#fff",
   },
   picker: {
     width: "100%",
